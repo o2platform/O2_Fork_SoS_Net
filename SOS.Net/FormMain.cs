@@ -123,11 +123,9 @@ namespace SOS.Net
 
         private void toolStripButtonSaveSettings_Click(object sender, EventArgs e)
         {
-            var settings = new CdbSettings
-                           {
-                               CdbPath = this.textBoxCBDPath.Text,
-                               SosexPath = this.textBoxSosexPath.Text
-                           };
+            var settings = new CdbSettings();
+            settings.CdbPath = this.textBoxCBDPath.Text;
+			settings.SosexPath = this.textBoxSosexPath.Text;                           
             this.controller.SaveSettings(settings);
         }
 

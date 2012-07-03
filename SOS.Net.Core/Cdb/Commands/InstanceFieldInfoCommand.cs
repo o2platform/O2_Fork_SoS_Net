@@ -91,14 +91,12 @@ namespace SOS.Net.Core.Cdb.Commands
                                                 "([^ ]+) *([^ ]+) *([^ ]+) *([^ ]+) *([0-1]) *([^ ]+) *([^ ]+) *([^ ]+)");
                         if (match.Success)
                         {
-                            InstanceFieldInfo instanceInfo = new InstanceFieldInfo
-                            {
-                                FieldAddress = match.Groups[1].Value,
-                                TypeName = match.Groups[4].Value,
-                                Attribut = match.Groups[6].Value,
-                                Value = match.Groups[7].Value,
-                                FieldName = match.Groups[8].Value
-                            };
+                            InstanceFieldInfo instanceInfo = new InstanceFieldInfo();
+                            instanceInfo.FieldAddress = match.Groups[1].Value;
+                            instanceInfo.TypeName = match.Groups[4].Value;
+                            instanceInfo.Attribut = match.Groups[6].Value;
+                            instanceInfo.Value = match.Groups[7].Value;
+                            instanceInfo.FieldName = match.Groups[8].Value;                            
                             result.Add(new CdbQueryable<InstanceFieldInfo>(instanceInfo, process));
                         }
                     }
@@ -155,14 +153,12 @@ namespace SOS.Net.Core.Cdb.Commands
                                             "([^ ]+) *([^ ]+) *([^ ]+) *([^ ]+) *([0-1]) *([^ ]+) *([^ ]+) *([^ ]+)");
                     if (match.Success)
                     {
-                        InstanceFieldInfo instanceInfo = new InstanceFieldInfo
-                        {
-                            FieldAddress = match.Groups[1].Value,
-                            TypeName = match.Groups[4].Value,
-                            Attribut = match.Groups[6].Value,
-                            Value = match.Groups[7].Value,
-                            FieldName = match.Groups[8].Value
-                        };
+                        InstanceFieldInfo instanceInfo = new InstanceFieldInfo();
+                        instanceInfo.FieldAddress = match.Groups[1].Value;
+                        instanceInfo.TypeName = match.Groups[4].Value;
+                        instanceInfo.Attribut = match.Groups[6].Value;
+                        instanceInfo.Value = match.Groups[7].Value;
+                        instanceInfo.FieldName = match.Groups[8].Value;                        
                         result.Add(new CdbQueryable<InstanceFieldInfo>(instanceInfo, process));
                     }
 

@@ -42,11 +42,9 @@ namespace SOS.Net.Core.Cdb.Commands
                     var match = Regex.Match(line, "\\[([0-9]+)\\] *([^ ]+)");
                     if (match.Success)
                     {
-                        ArrayInstanceInfo arrayInstanceInfo = new ArrayInstanceInfo
-                        {
-                            Number = match.Groups[1].Value,
-                            Address = match.Groups[2].Value
-                        };
+                        ArrayInstanceInfo arrayInstanceInfo = new ArrayInstanceInfo();
+                        arrayInstanceInfo.Number = match.Groups[1].Value;
+                        arrayInstanceInfo.Address = match.Groups[2].Value;                        
                         result.Add(new CdbQueryable<ArrayInstanceInfo>(arrayInstanceInfo, process));
                     }
 

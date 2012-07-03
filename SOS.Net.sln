@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOS.Net.Core", "SOS.Net.Core\SOS.Net.Core.csproj", "{698B0938-DDCF-4FAA-B33C-2401727C2CF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOS.Net.Tests", "SOS.Net.Tests\SOS.Net.Tests.csproj", "{8EDFF998-5CC4-4C80-88A4-C5E94651288F}"

@@ -20,7 +20,7 @@ namespace SOS.Net
         }
 
         private void linkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
+        {        	
             Help.ShowHelp(this,(sender as LinkLabel).Text);
         }
 

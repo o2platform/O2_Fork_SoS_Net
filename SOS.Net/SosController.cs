@@ -49,11 +49,9 @@ namespace SOS.Net
         {
             Settings.Default.Reload();
 
-            this.settings = new CdbSettings
-            {
-                CdbPath = Settings.Default.CdbPath,
-                SosexPath = Settings.Default.SosexPath
-            };
+            this.settings = new CdbSettings();
+            this.settings.CdbPath = Settings.Default.CdbPath;
+            this.settings.SosexPath = Settings.Default.SosexPath;            
 
             return this.settings;
         }

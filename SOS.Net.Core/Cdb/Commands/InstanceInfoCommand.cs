@@ -37,11 +37,9 @@ namespace SOS.Net.Core.Cdb.Commands
                 var match = Regex.Match(line, "([^ ]+) *([^ ]+) *([0-9]+) *");
                 if (match.Success)
                 {
-                    InstanceInfo instanceInfo = new InstanceInfo
-                                                {
-                                                    Address = match.Groups[1].Value,
-                                                    Size = match.Groups[3].Value
-                                                };
+                    InstanceInfo instanceInfo = new InstanceInfo();
+                    instanceInfo.Address = match.Groups[1].Value;
+                    instanceInfo.Size = match.Groups[3].Value;                                                
                     result.Add(new CdbQueryable<InstanceInfo>(instanceInfo, process));
                 }
 

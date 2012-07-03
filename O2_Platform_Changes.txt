@@ -1,0 +1,3 @@
+Original version of SoS.Net created from: https://bitbucket.org/grozeille/sosnet/get/ca9f28ab2467.zip
+
+Dinis Note: I was not able to find the Git Clone line and the one provided on the site (https://bitbucket.org/grozeille/sosnet) didn't work with Git(https://bitbucket.org/grozeille/sosnet.git also didn't work)

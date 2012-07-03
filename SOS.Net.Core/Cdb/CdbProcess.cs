@@ -44,17 +44,15 @@ namespace SOS.Net.Core.Cdb
         {
             this.settings = settings;
 
-            var pinfo = new ProcessStartInfo
-            {
-                FileName = Path.Combine(this.settings.CdbPath, "cdb.exe"),
-                WorkingDirectory = ".",
-                Arguments = string.Format("-z \"{0}\"", path),
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true
-            };
+            var pinfo = new ProcessStartInfo();
+            pinfo.FileName = Path.Combine(this.settings.CdbPath, "cdb.exe");
+            pinfo.WorkingDirectory = ".";
+            pinfo.Arguments = string.Format("-z \"{0}\"", path);
+            pinfo.UseShellExecute = false;
+            pinfo.RedirectStandardInput = true;
+            pinfo.RedirectStandardOutput = true;
+            pinfo.WindowStyle = ProcessWindowStyle.Hidden;
+            pinfo.CreateNoWindow = true;            
 
             cdb = Process.Start(pinfo);
 
@@ -70,17 +68,16 @@ namespace SOS.Net.Core.Cdb
         {
             this.settings = settings;
 
-            var pinfo = new ProcessStartInfo
-            {
-                FileName = Path.Combine(this.settings.CdbPath, "cdb.exe"),
-                WorkingDirectory = ".",
-                Arguments = string.Format("-p {0}", pid),
-                UseShellExecute = false,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
-                CreateNoWindow = true
-            };
+            var pinfo = new ProcessStartInfo();
+            
+            pinfo.FileName = Path.Combine(this.settings.CdbPath, "cdb.exe");
+            pinfo.WorkingDirectory = ".";
+           	pinfo.Arguments = string.Format("-p {0}", pid);
+            pinfo.UseShellExecute = false;
+            pinfo.RedirectStandardInput = true;
+            pinfo.RedirectStandardOutput = true;
+            pinfo.WindowStyle = ProcessWindowStyle.Hidden;
+            pinfo.CreateNoWindow = true;            
 
             cdb = Process.Start(pinfo);
 

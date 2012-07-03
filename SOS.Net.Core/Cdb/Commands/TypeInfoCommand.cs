@@ -31,13 +31,11 @@ namespace SOS.Net.Core.Cdb.Commands
                 var match = Regex.Match(line, "([^ ]+) *([0-9]+) *([0-9]+) *(.+)");
                 if (match.Success)
                 {
-                    TypeInfo typeInfo = new TypeInfo
-                                        {
-                                            Address = match.Groups[1].Value,
-                                            Count = match.Groups[2].Value,
-                                            TotalSize = match.Groups[3].Value,
-                                            ClassName = match.Groups[4].Value
-                                        };
+                    TypeInfo typeInfo = new TypeInfo();
+                    typeInfo.Address = match.Groups[1].Value;
+                    typeInfo.Count = match.Groups[2].Value;
+                    typeInfo.TotalSize = match.Groups[3].Value;
+                    typeInfo.ClassName = match.Groups[4].Value;                                        
                     result.Add(new CdbQueryable<TypeInfo>(typeInfo, process));
                 }
                 line = reader.ReadLine();

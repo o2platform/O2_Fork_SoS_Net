@@ -24,11 +24,9 @@ namespace SOS.Net.Core.Cdb.Commands
             {
                 do
                 {
-                    var refInfo = new ReferenceInfo
-                                  {
-                                      Address = match.Groups[1].Value,
-                                      Name = match.Groups[2].Value
-                                  };
+                    var refInfo = new ReferenceInfo();
+					refInfo.Address = match.Groups[1].Value;
+					refInfo.Name = match.Groups[2].Value;
                     result.Add(new CdbQueryable<ReferenceInfo>(refInfo, process));
                 } while ((match = match.NextMatch()).Success);
             }
