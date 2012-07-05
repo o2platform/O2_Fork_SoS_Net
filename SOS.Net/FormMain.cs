@@ -17,14 +17,15 @@ namespace SOS.Net
         public FormMain()
         {
             InitializeComponent();
-            controller.OnCdbOuput += new EventHandler<CdbEventArgs>(controller_OnCdbOuput);
+            controller.OnCdbOuput = controller_OnCdbOuput;
+            this.Text+= " (O2 Platform version";
         }
 
-        void controller_OnCdbOuput(object sender, CdbEventArgs e)
+        void controller_OnCdbOuput(string input, string output)
         {
-            this.textBoxCdbOuput.AppendText(e.Intput);
+            this.textBoxCdbOuput.AppendText(input);
             this.textBoxCdbOuput.AppendText(Environment.NewLine);
-            this.textBoxCdbOuput.AppendText(e.Output);
+            this.textBoxCdbOuput.AppendText(output);
             this.textBoxCdbOuput.AppendText(Environment.NewLine);
             this.MoveOutputToEnd();
         }

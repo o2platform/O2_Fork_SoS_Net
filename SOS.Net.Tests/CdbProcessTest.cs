@@ -26,7 +26,7 @@ namespace SOS.Net.Tests
             CdbSettings settings = new CdbSettings();
             settings.CdbPath = @"C:\Program Files\Debugging Tools for Windows (x64)\";            
 
-            return CdbProcess.Attach(settings, pid);
+            return CdbProcess.Attach(settings, pid, null);
         }
 
         private void RunCdbTest(Action<CdbProcess> test)

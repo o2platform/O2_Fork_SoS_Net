@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SOS.Net.Core
 {
-    public class CdbEventArgs : EventArgs
+    /*public class CdbEventArgs : EventArgs
     {
         public string Output { get; private set; }
 
@@ -16,5 +16,5 @@ namespace SOS.Net.Core
             this.Output = output;
             this.Intput = input;
         }
-    }
+    }*/
 }

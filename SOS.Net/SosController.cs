@@ -38,7 +38,7 @@ namespace SOS.Net
 
         private bool cdbStarted;
 
-        public event EventHandler<CdbEventArgs> OnCdbOuput;
+        public Action<string, string> OnCdbOuput;
 
         public bool Attached
         {
@@ -116,16 +116,16 @@ namespace SOS.Net
 
         public void AttachToProcess(string pid)
         {
-            this.cdb = CdbProcess.Attach(this.settings, int.Parse(pid));
-            this.cdb.OnCdbOuput += new EventHandler<CdbEventArgs>(cdb_OnCdbOuput);
+            //this.cdb.OnCdbOuput += new EventHandler<CdbEventArgs>(cdb_OnCdbOuput); //DC: add event before attach so that we get the attach messages
+            this.cdb = CdbProcess.Attach(this.settings, int.Parse(pid), cdb_OnCdbOuput);            
         }
 
         public void OpenDump(string path)
         {
             if (this.cdb == null)
             {
-                this.cdb = CdbProcess.Attach(this.settings, path);
-                this.cdb.OnCdbOuput += new EventHandler<CdbEventArgs>(cdb_OnCdbOuput);
+                this.cdb = CdbProcess.Attach(this.settings, path, cdb_OnCdbOuput);
+                this.cdb.OnCdbOuput = cdb_OnCdbOuput;
             }
             else
             {
@@ -140,10 +140,10 @@ namespace SOS.Net
             this.cdb.ExecuteCommand(string.Format(".dump /mfh \"{0}\"", path.Replace("\\", "\\\\")));
         }
 
-        protected void cdb_OnCdbOuput(object sender, CdbEventArgs e)
+        public void cdb_OnCdbOuput(string input, string output)
         {
             if (OnCdbOuput != null)
-                OnCdbOuput(this, e);
+                OnCdbOuput(input, output);
         }
 
         public string GetPreviousCommand()

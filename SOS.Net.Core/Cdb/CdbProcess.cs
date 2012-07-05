@@ -16,7 +16,7 @@ namespace SOS.Net.Core.Cdb
         
         private int commandHistoryPosition;
 
-        public event EventHandler<CdbEventArgs> OnCdbOuput;
+        public Action<string, string> OnCdbOuput;
 
         /// <summary>
         /// Create a new CdbProcess and attach it to a process
@@ -24,9 +24,9 @@ namespace SOS.Net.Core.Cdb
         /// <param name="settings">settings to find CDB command line, etc.</param>
         /// <param name="pid">pid of the process to attach</param>
         /// <returns>The CdbProcess attached</returns>
-        public static CdbProcess Attach(CdbSettings settings, int pid)
+        public static CdbProcess Attach(CdbSettings settings, int pid, Action<string, string> onCdbOuput)
         {
-            return new CdbProcess(settings, pid);
+            return new CdbProcess(settings, pid, onCdbOuput);
         }
 
         /// <summary>
@@ -35,12 +35,17 @@ namespace SOS.Net.Core.Cdb
         /// <param name="settings">settings to find CDB command line, etc.</param>
         /// <param name="path">path to the dump file</param>
         /// <returns>The CdbProcess attached</returns>
-        public static CdbProcess Attach(CdbSettings settings, string path)
+        public static CdbProcess Attach(CdbSettings settings, string path, Action<string, string> onCdbOuput)
         {
-            return new CdbProcess(settings, path);
+            return new CdbProcess(settings, path, onCdbOuput);
         }
 
-        protected CdbProcess(CdbSettings settings, string path)
+        public CdbProcess(Action<string, string> onCdbOuput)
+        {
+            OnCdbOuput = onCdbOuput;
+        }
+
+        public CdbProcess(CdbSettings settings, string path, Action<string, string> onCdbOuput) : this(onCdbOuput)
         {
             this.settings = settings;
 
@@ -51,8 +56,8 @@ namespace SOS.Net.Core.Cdb
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardInput = true;
             pinfo.RedirectStandardOutput = true;
-            pinfo.WindowStyle = ProcessWindowStyle.Hidden;
-            pinfo.CreateNoWindow = true;            
+            //pinfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //pinfo.CreateNoWindow = true;                                
 
             cdb = Process.Start(pinfo);
 
@@ -62,9 +67,10 @@ namespace SOS.Net.Core.Cdb
         public void LoadDump(string path)
         {
             this.ExecuteCommand(string.Format(".opendump \"{0}\"", path.Replace("\\", "\\\\")));
-        }       
+        }
 
-        protected CdbProcess(CdbSettings settings, int pid)
+        protected CdbProcess(CdbSettings settings, int pid, Action<string, string> onCdbOuput)
+            : this(onCdbOuput)
         {
             this.settings = settings;
 
@@ -76,8 +82,8 @@ namespace SOS.Net.Core.Cdb
             pinfo.UseShellExecute = false;
             pinfo.RedirectStandardInput = true;
             pinfo.RedirectStandardOutput = true;
-            pinfo.WindowStyle = ProcessWindowStyle.Hidden;
-            pinfo.CreateNoWindow = true;            
+            //pinfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //pinfo.CreateNoWindow = true;            
 
             cdb = Process.Start(pinfo);
 
@@ -87,7 +93,8 @@ namespace SOS.Net.Core.Cdb
         private CdbProcess Start()
         {
             this.ExecuteCommand(".loadby sos mscorwks");
-
+            this.ExecuteCommand(".loadby sos clr"); //DC: try both (need to add better logic)
+    
             string sosexFullPath = this.settings.SosexPath;
             if (string.IsNullOrEmpty(sosexFullPath))
                 sosexFullPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -123,11 +130,12 @@ namespace SOS.Net.Core.Cdb
                 if (line != null)
                 {
                     line = line.Replace("\n", Environment.NewLine);
-                    output.AppendLine(line);
+                    if (!line.EndsWith(endToken))       //DC: don't add to log the endToken
+                        output.AppendLine(line);
                 }
             } while (line != null && !line.EndsWith(endToken));
             if (OnCdbOuput != null)
-                OnCdbOuput(this, new CdbEventArgs(command, output.ToString()));
+                OnCdbOuput(command, output.ToString());
 
             return output.ToString();
         }
